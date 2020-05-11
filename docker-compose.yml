@@ -10,15 +10,23 @@ services:
     deploy:
       replicas: 1
     configs:
-      - source: jenkins_master_config_v1
+      - source: jenkins_master_config_v2
         target: /var/jenkins_home/casc_configs/jenkins.yaml
         uid: "1000"
         gid: "1000"
     environment:
       - CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
+    secrets:
+      - github_e_token
+      - dev_vault_password
 
 configs:
-  jenkins_master_config_v1:
+  jenkins_master_config_v2:
     external: true
 volumes:
   jenkins_home:
+secrets:
+  github_e_token:
+    external: true
+  dev_vault_password:
+    external: true
