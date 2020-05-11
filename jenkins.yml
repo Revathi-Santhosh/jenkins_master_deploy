@@ -7,10 +7,10 @@ jenkins:
   globalNodeProperties:
     - envVars:
         env:
-          - key: "dasdass"
-            value: "sss"
-          - key: "sudaiyudia"
-            value: "1jkdfossfuoa"
+          - key: "environment"
+            value: "dev"
+          - key: "nexus_url"
+            value: "https://dev.necus.com"
   clouds:
     - kubernetes:
         name: "Advanced-k8's"
@@ -20,16 +20,17 @@ jenkins:
         connectTimeout: 10
         templates:
           - name: "test-k8's"
-            label: "test-label"
+            label: "ansible"
             containers:
-              - name: "k8's-container"
-                image: "jenkins"
-                command: "ls -lrt"
-                workingDir: "/var/jenkins_home"
+              - name: "jnlp"
+                image: "jenkins_ansible_slave:1.0.0"
+                command: ""
+                args: ""
+                workingDir: "/home/jenkins_agent"
             envVars:
               - envVar:
-                  key: "dev-key"
-                  value: "11-05-2020"
+                  key: "environment"
+                  value: "dev"
             volumes:
               - emptyDirVolume:
                   memory: true
@@ -60,12 +61,12 @@ credentials:
 
 unclassified:
   location:
-    adminAddress: "jenkins.com"
-    url: "http://firsttest.jenkins.com"
+    adminAddress: "admin@jenkins.com"
+    url: "http://test.jenkins.com"
   gitHubPluginConfig:
     configs:
-      - name: "InHouse GitHub EE"
-        apiUrl: "https://github.domain.local/api/v3"
+      - name: "GitHub"
+        apiUrl: "https://github.com/api/v3"
         credentialsId: "vault-id"
         manageHooks: true
-    hookUrl: "https://192.168.0.14:8081/github-webhook"
+    hookUrl: "https://github.com/github-webhook"
