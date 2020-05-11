@@ -15,7 +15,7 @@ jenkins:
     - kubernetes:
         name: "Advanced-k8's"
         serverUrl: "https://Advance-k8's.com"
-        credentialsId: "revathi-k8's"
+        credentialsId: "github_e_token"
         jenkinsUrl: "http://192.168.0.14:8084"
         connectTimeout: 10
         templates:
@@ -50,14 +50,14 @@ credentials:
       - credentials:
         - usernamePassword:
             scope: SYSTEM
-            id: test_jenkins
-            username: test
-            password: "redhat"
+            id: github_e_token
+            username: revathilalam
+            password: ${github_e_token}
         - string:
-            description: "Providing secrets"
-            id: "vault-id"
+            description: "Dev enviornment vault password"
+            id: "dev_vault_pass"
             scope: GLOBAL
-            secret: "vault-pass"
+            secret: ${dev_vault_password}
 
 unclassified:
   location:
@@ -67,6 +67,6 @@ unclassified:
     configs:
       - name: "GitHub"
         apiUrl: "https://github.com/api/v3"
-        credentialsId: "vault-id"
+        credentialsId: "github_e_token"
         manageHooks: true
     hookUrl: "https://github.com/github-webhook"
