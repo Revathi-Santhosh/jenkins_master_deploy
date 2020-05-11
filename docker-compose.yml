@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  jenkins:
+    image: jenkin_master_swarm:1.0.0
+    ports:
+      - "8084:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    deploy:
+      replicas: 1
+    configs:
+      - source: jenkins_master_config_v1
+        target: /var/jenkins_home/casc_configs/jenkins.yaml
+        uid: "1000"
+        gid: "1000"
+    environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
+
+configs:
+  jenkins_master_config_v1:
+    external: true
+volumes:
+  jenkins_home:

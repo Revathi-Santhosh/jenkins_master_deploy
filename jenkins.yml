@@ -1,0 +1,71 @@
+jenkins:
+  systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code plugin\n\n"
+  slaveAgentPort: 50000
+  agentProtocols:
+    - "jnlp4"
+  numExecutors: 5
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: "dasdass"
+            value: "sss"
+          - key: "sudaiyudia"
+            value: "1jkdfossfuoa"
+  clouds:
+    - kubernetes:
+        name: "Advanced-k8's"
+        serverUrl: "https://Advance-k8's.com"
+        credentialsId: "revathi-k8's"
+        jenkinsUrl: "http://192.168.0.14:8084"
+        connectTimeout: 10
+        templates:
+          - name: "test-k8's"
+            label: "test-label"
+            containers:
+              - name: "k8's-container"
+                image: "jenkins"
+                command: "ls -lrt"
+                workingDir: "/var/jenkins_home"
+            envVars:
+              - envVar:
+                  key: "dev-key"
+                  value: "11-05-2020"
+            volumes:
+              - emptyDirVolume:
+                  memory: true
+                  mountPath: "/tmp"
+          - name: "k8s-slave"
+            namespace: "default"
+            containers:
+              - name: "jnlp"
+                image: "jnlp-slave:latest"
+                alwaysPullImage: true
+                workingDir: "/home/jenkins"
+                resourceRequestCpu: "500m"
+                resourceLimitCpu: "1000m"
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+        - usernamePassword:
+            scope: SYSTEM
+            id: test_jenkins
+            username: test
+            password: "redhat"
+        - string:
+            description: "Providing secrets"
+            id: "vault-id"
+            scope: GLOBAL
+            secret: "vault-pass"
+
+unclassified:
+  location:
+    adminAddress: "jenkins.com"
+    url: "http://firsttest.jenkins.com"
+  gitHubPluginConfig:
+    configs:
+      - name: "InHouse GitHub EE"
+        apiUrl: "https://github.domain.local/api/v3"
+        credentialsId: "vault-id"
+        manageHooks: true
+    hookUrl: "https://192.168.0.14:8081/github-webhook"
